@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cofcy — Приватные услуги</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700;800;900&family=SF+Pro+Text:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Системные переменные в стиле Apple */
+        :root {
+            --system-blue: #007AFF;
+            --system-blue-dark: #0056CC;
+            --system-blue-light: #409CFF;
+            --system-gray-1: #8E8E93;
+            --system-gray-2: #636366;
+            --system-gray-3: #48484A;
+            --system-gray-4: #3A3A3C;
+            --system-gray-5: #2C2C2E;
+            --system-gray-6: #1C1C1E;
+            --system-black: #000000;
+            --system-white: #FFFFFF;
+            --system-green: #34C759;
+            --system-red: #FF3B30;
+            --system-orange: #FF9500;
+            --system-purple: #AF52DE;
+            
+            --card-bg: rgba(28, 28, 30, 0.8);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-primary: #F5F5F7;
+            --text-secondary: #AEAEB2;
+            --text-tertiary: #8E8E93;
+            
+            --blur-bg: rgba(0, 0, 0, 0.8);
+            --blur-strength: saturate(180%) blur(20px);
+            
+            --shadow-sm: 0 2px 20px rgba(0, 0, 0, 0.15);
+            --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 16px 50px rgba(0, 0, 0, 0.4);
+            
+            --radius-sm: 10px;
+            --radius-md: 14px;
+            --radius-lg: 20px;
+            --radius-xl: 28px;
+            
+            --transition-smooth: all 0.4s cubic-bezier(0.28, 0.11, 0.32, 1);
+            --transition-fast: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            
+            --gradient-blue: linear-gradient(135deg, var(--system-blue) 0%, var(--system-blue-light) 100%);
+            --gradient-dark: linear-gradient(180deg, var(--system-black) 0%, #0A0A0A 100%);
+        }
+
+        /* Базовые стили */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: var(--text-primary);
+            background-color: var(--system-black);
+            line-height: 1.47059;
+            font-weight: 400;
+            letter-spacing: -0.022em;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 0 22px;
+        }
+
+        /* Навигация */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: var(--blur-bg);
+            backdrop-filter: var(--blur-strength);
+            -webkit-backdrop-filter: var(--blur-strength);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            height: 52px;
+            display: flex;
+            align-items: center;
+            padding: 0 22px;
+        }
+
+        .nav-content {
+            width: 100%;
+            max-width: 980px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-family: 'SF Pro Display', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--system-white);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: var(--transition-fast);
+        }
+
+        .logo:hover {
+            opacity: 0.85;
+        }
+
+        .logo-icon {
+            background: var(--gradient-blue);
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 17px;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: var(--radius-md);
+            transition: var(--transition-fast);
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-links a.active {
+            color: var(--system-blue);
+        }
+
+        .menu-toggle {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-md);
+            background: transparent;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .menu-toggle:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .menu-toggle i {
+            font-size: 20px;
+        }
+
+        /* Мобильное меню */
+        .mobile-menu {
+            position: fixed;
+            top: 52px;
+            right: -100%;
+            width: 300px;
+            height: calc(100vh - 52px);
+            background: var(--card-bg);
+            backdrop-filter: var(--blur-strength);
+            -webkit-backdrop-filter: var(--blur-strength);
+            border-left: 1px solid var(--card-border);
+            z-index: 999;
+            transition: var(--transition-smooth);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-menu a {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px 20px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500;
+            border-radius: var(--radius-md);
+            transition: var(--transition-fast);
+        }
+
+        .mobile-menu a:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .mobile-menu a i {
+            width: 24px;
+            color: var(--system-blue);
+        }
+
+        .menu-overlay {
+            position: fixed;
+            top: 52px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 998;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-smooth);
+        }
+
+        .menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Герой секция */
+        .hero {
+            padding: 120px 0 80px;
+            background: var(--gradient-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 50%, rgba(0, 122, 255, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 20%, rgba(175, 82, 222, 0.05) 0%, transparent 50%);
+            animation: gradientShift 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes gradientShift {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(50px, 50px) rotate(180deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 8px 16px;
+            border-radius: var(--radius-xl);
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--system-blue);
+            margin-bottom: 32px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hero-badge i {
+            color: var(--system-green);
+        }
+
+        .hero-title {
+            font-family: 'SF Pro Display', sans-serif;
+            font-size: 48px;
+            font-weight: 800;
+            line-height: 1.08349;
+            letter-spacing: -0.003em;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #FFFFFF 0%, #AEAEB2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 24px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            line-height: 1.33341;
+            letter-spacing: 0.009em;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: 'SF Pro Display', sans-serif;
+            font-size: 40px;
+            font-weight: 800;
+            color: var(--system-blue);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-tertiary);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Основные ссылки */
+        .links-section {
+            padding: 100px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-family: 'SF Pro Display', sans-serif;
+            font-size: 40px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            line-height: 1.1;
+            letter-spacing: -0.003em;
+        }
+
+        .section-subtitle {
+            font-size: 21px;
+            color: var(--text-secondary);
+            font-weight: 400;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.38105;
+            letter-spacing: 0.011em;
+        }
+
+        .links-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            max-width: 680px;
+            margin: 0 auto;
+        }
+
+        .link-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--card-border);
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .link-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--gradient-blue);
+            border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+        }
+
+        .link-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: rgba(0, 122, 255, 0.3);
+        }
+
+        .link-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: var(--radius-md);
+            background: rgba(0, 122, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--system-blue);
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .link-content {
+            flex: 1;
+        }
+
+        .link-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            line-height: 1.2;
+        }
+
+        .link-description {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.47059;
+        }
+
+        .link-arrow {
+            color: var(--system-gray-1);
+            font-size: 18px;
+            opacity: 0.7;
+            transition: var(--transition-fast);
+        }
+
+        .link-card:hover .link-arrow {
+            color: var(--system-blue);
+            opacity: 1;
+            transform: translateX(4px);
+        }
+
+        /* Режим работы */
+        .hours-section {
+            padding: 80px 0;
+            background: var(--system-gray-6);
+            border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+            margin-top: 40px;
+        }
+
+        .hours-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--card-border);
+            padding: 32px;
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .hours-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+
+        .hours-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-md);
+            background: rgba(255, 149, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--system-orange);
+            font-size: 22px;
+        }
+
+        .hours-title {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.14286;
+        }
+
+        .hours-status {
+            font-size: 32px;
+            font-weight: 800;
+            padding: 20px;
+            border-radius: var(--radius-lg);
+            margin-bottom: 24px;
+            line-height: 1;
+            letter-spacing: -0.003em;
+        }
+
+        .status-open {
+            color: var(--system-green);
+            background: rgba(52, 199, 89, 0.1);
+            border: 1px solid rgba(52, 199, 89, 0.2);
+        }
+
+        .status-closed {
+            color: var(--system-red);
+            background: rgba(255, 59, 48, 0.1);
+            border: 1px solid rgba(255, 59, 48, 0.2);
+        }
+
+        .hours-details {
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            line-height: 1.44444;
+        }
+
+        .hours-time {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--system-orange);
+            margin-bottom: 24px;
+        }
+
+        .hours-note {
+            font-size: 14px;
+            color: var(--text-tertiary);
+            font-style: italic;
+            margin-top: 20px;
+            line-height: 1.42859;
+        }
+
+        /* Контакты */
+        .contact-section {
+            padding: 100px 0;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+            max-width: 680px;
+            margin: 0 auto;
+        }
+
+        .contact-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--card-border);
+            padding: 32px;
+            text-align: center;
+            transition: var(--transition-smooth);
+        }
+
+        .contact-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: rgba(0, 122, 255, 0.3);
+        }
+
+        .contact-icon {
+            width: 72px;
+            height: 72px;
+            border-radius: var(--radius-lg);
+            background: var(--gradient-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            color: white;
+            font-size: 32px;
+        }
+
+        .contact-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            line-height: 1.16667;
+        }
+
+        .contact-description {
+            font-size: 17px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            line-height: 1.47059;
+        }
+
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--gradient-blue);
+            color: white;
+            text-decoration: none;
+            padding: 14px 28px;
+            border-radius: var(--radius-lg);
+            font-size: 17px;
+            font-weight: 600;
+            transition: var(--transition-smooth);
+        }
+
+        .contact-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 122, 255, 0.4);
+        }
+
+        /* Футер */
+        .footer {
+            padding: 60px 0 40px;
+            background: var(--system-black);
+            border-top: 1px solid var(--system-gray-5);
+        }
+
+        .footer-content {
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-family: 'SF Pro Display', sans-serif;
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--system-white);
+            margin-bottom: 24px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: var(--transition-fast);
+        }
+
+        .footer-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .copyright {
+            color: var(--system-gray-2);
+            font-size: 12px;
+            line-height: 1.33337;
+        }
+
+        /* Анимации и адаптивность */
+        @media (min-width: 768px) {
+            .navbar {
+                height: 60px;
+                padding: 0 32px;
+            }
+            
+            .nav-links {
+                display: flex;
+                gap: 8px;
+            }
+            
+            .menu-toggle {
+                display: none;
+            }
+            
+            .mobile-menu {
+                display: none;
+            }
+            
+            .menu-overlay {
+                display: none;
+            }
+            
+            .hero {
+                padding: 160px 0 100px;
+            }
+            
+            .hero-title {
+                font-size: 64px;
+                line-height: 1.0625;
+            }
+            
+            .hero-subtitle {
+                font-size: 28px;
+                line-height: 1.14286;
+            }
+            
+            .links-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .contact-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .hero-title {
+                font-size: 80px;
+            }
+        }
+
+        /* Эффекты загрузки */
+        .fade-in {
+            animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .slide-up {
+            animation: slideUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Утилиты */
+        .text-gradient {
+            background: var(--gradient-blue);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .pill {
+            display: inline-block;
+            padding: 6px 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-xl);
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin: 0 4px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="#" class="logo">
+                <div class="logo-icon">C</div>
+                <span>Cofcy</span>
+            </a>
+            
+            <div class="nav-links">
+                <a href="#links" class="active">Ссылки</a>
+                <a href="#hours">Режим работы</a>
+                <a href="#contact">Контакты</a>
+                <a href="#status">Статус</a>
+            </div>
+            
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Мобильное меню -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#links">
+            <i class="fas fa-link"></i>
+            Основные ссылки
+        </a>
+        <a href="#hours">
+            <i class="fas fa-clock"></i>
+            Режим работы
+        </a>
+        <a href="#contact">
+            <i class="fas fa-headset"></i>
+            Контакты
+        </a>
+        <a href="#status">
+            <i class="fas fa-signal"></i>
+            Статус системы
+        </a>
+        <a href="https://t.me/CofcyShop" target="_blank">
+            <i class="fas fa-shopping-bag"></i>
+            Магазин
+        </a>
+        <a href="https://t.me/+cR5RgD8Kt4ZkOWYy" target="_blank">
+            <i class="fas fa-star"></i>
+            Отзывы клиентов
+        </a>
+    </div>
+
+    <!-- Герой секция -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content fade-in">
+                <div class="hero-badge slide-up">
+                    <i class="fas fa-bolt"></i>
+                    <span>ЭКСКЛЮЗИВНЫЙ ДОСТУП</span>
+                </div>
+                
+                <h1 class="hero-title slide-up" style="animation-delay: 0.1s">
+                    Приватные услуги<br>премиум-уровня
+                </h1>
+                
+                <p class="hero-subtitle slide-up" style="animation-delay: 0.2s">
+                    Конфиденциальность, безопасность и результат. 
+                    Экспертные решения для требовательных клиентов.
+                </p>
+                
+                <div class="hero-stats slide-up" style="animation-delay: 0.3s">
+                    <div class="stat-item">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">Доступность</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">Гарантия</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">5 мин</div>
+                        <div class="stat-label">Среднее время ответа</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Основные ссылки -->
+    <section class="links-section" id="links">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2 class="section-title">Основные ресурсы</h2>
+                <p class="section-subtitle">Вечные ссылки на все важные сервисы и контакты</p>
+            </div>
+            
+            <div class="links-grid">
+                <a href="https://t.me/CofcyShop" target="_blank" class="link-card slide-up" style="animation-delay: 0.1s">
+                    <div class="link-icon">
+                        <i class="fas fa-shopping-bag"></i>
+                    </div>
+                    <div class="link-content">
+                        <div class="link-title">Cofcy Shop</div>
+                        <div class="link-description">
+                            Основной магазин с полным каталогом услуг. 
+                            Автоматические покупки, мгновенная доставка.
+                        </div>
+                    </div>
+                    <div class="link-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </a>
+                
+                <a href="https://t.me/+cR5RgD8Kt4ZkOWYy" target="_blank" class="link-card slide-up" style="animation-delay: 0.2s">
+                    <div class="link-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="link-content">
+                        <div class="link-title">Канал отзывов</div>
+                        <div class="link-description">
+                            Реальные отзывы от довольных клиентов. 
+                            Более 500+ положительных оценок качества.
+                        </div>
+                    </div>
+                    <div class="link-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </a>
+                
+                <a href="https://cofcy.t.me" target="_blank" class="link-card slide-up" style="animation-delay: 0.3s">
+                    <div class="link-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <div class="link-content">
+                        <div class="link-title">Личный контакт</div>
+                        <div class="link-description">
+                            Прямая связь для консультаций и индивидуальных заказов. 
+                            Только личные переговоры.
+                        </div>
+                    </div>
+                    <div class="link-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </a>
+                
+                <a href="https://cofcybot.t.me" target="_blank" class="link-card slide-up" style="animation-delay: 0.4s">
+                    <div class="link-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="link-content">
+                        <div class="link-title">Резервный бот</div>
+                        <div class="link-description">
+                            Автоматизированная система связи на случай спам-блокировки. 
+                            Альтернативный канал связи.
+                        </div>
+                    </div>
+                    <div class="link-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Режим работы -->
+    <section class="hours-section" id="hours">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2 class="section-title">Рабочий график</h2>
+                <p class="section-subtitle">Актуальное время доступности и статус работы</p>
+            </div>
+            
+            <div class="hours-card slide-up">
+                <div class="hours-header">
+                    <div class="hours-icon">
+                        <i class="fas fa-business-time"></i>
+                    </div>
+                    <div class="hours-title">Доступность</div>
+                </div>
+                
+                <div class="hours-status" id="statusIndicator">
+                    <!-- Статус будет обновлен JavaScript -->
+                </div>
+                
+                <div class="hours-details" id="timeDetails">
+                    <!-- Детали времени будут обновлены JavaScript -->
+                </div>
+                
+                <div class="hours-time">10:00 – 22:00 (МСК)</div>
+                
+                <div class="hours-note">
+                    Вне рабочего времени отвечаю в течение 1-2 часов. 
+                    Срочные заказы обрабатываются круглосуточно.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Контакты -->
+    <section class="contact-section" id="contact">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2 class="section-title">Свяжитесь со мной</h2>
+                <p class="section-subtitle">Выберите удобный способ для быстрой связи</p>
+            </div>
+            
+            <div class="contact-grid">
+                <div class="contact-card slide-up" style="animation-delay: 0.1s">
+                    <div class="contact-icon">
+                        <i class="fab fa-telegram"></i>
+                    </div>
+                    <h3 class="contact-title">Основной Telegram</h3>
+                    <p class="contact-description">
+                        Быстрая связь для консультаций, заказов и вопросов. 
+                        Среднее время ответа: 5 минут.
+                    </p>
+                    <a href="https://cofcy.t.me" target="_blank" class="contact-link">
+                        <i class="fab fa-telegram"></i>
+                        Написать сейчас
+                    </a>
+                </div>
+                
+                <div class="contact-card slide-up" style="animation-delay: 0.2s">
+                    <div class="contact-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3 class="contact-title">Резервный канал</h3>
+                    <p class="contact-description">
+                        Автоматизированный бот для связи при блокировках. 
+                        Работает 24/7 без перерывов.
+                    </p>
+                    <a href="https://cofcybot.t.me" target="_blank" class="contact-link">
+                        <i class="fas fa-robot"></i>
+                        Перейти к боту
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer class="footer" id="status">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">Cofcy</div>
+                
+                <div class="footer-links">
+                    <a href="#links">Ссылки</a>
+                    <a href="#hours">Режим работы</a>
+                    <a href="#contact">Контакты</a>
+                    <a href="https://t.me/CofcyShop" target="_blank">Магазин</a>
+                    <a href="https://t.me/+cR5RgD8Kt4ZkOWYy" target="_blank">Отзывы</a>
+                </div>
+                
+                <div class="system-status">
+                    <div class="pill">
+                        <i class="fas fa-circle" style="color: var(--system-green); margin-right: 6px;"></i>
+                        Система онлайн
+                    </div>
+                    <div class="pill">
+                        <i class="fas fa-bolt" style="color: var(--system-orange); margin-right: 6px;"></i>
+                        Быстрые ответы
+                    </div>
+                    <div class="pill">
+                        <i class="fas fa-shield-alt" style="color: var(--system-blue); margin-right: 6px;"></i>
+                        Безопасность
+                    </div>
+                </div>
+                
+                <div class="copyright">
+                    © 2023 Cofcy Services. Все права защищены.<br>
+                    Конфиденциальность и безопасность гарантированы.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Гамбургер меню
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuOverlay = document.getElementById('menuOverlay');
+        
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : 'auto';
+        });
+        
+        menuOverlay.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+            menuOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+        
+        // Закрытие меню при клике на ссылку
+        document.querySelectorAll('.mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+                menuOverlay.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        });
+        
+        // Система определения времени работы
+        function updateBusinessHours() {
+            const statusElement = document.getElementById('statusIndicator');
+            const timeDetails = document.getElementById('timeDetails');
+            
+            const now = new Date();
+            
+            // Переводим текущее время в московское (UTC+3)
+            const mskOffset = 3 * 60; // Москва UTC+3 в минутах
+            const localOffset = now.getTimezoneOffset(); // Локальное смещение в минутах
+            const mskTime = new Date(now.getTime() + (mskOffset + localOffset) * 60000);
+            
+            const currentHour = mskTime.getHours();
+            const currentMinute = mskTime.getMinutes();
+            const currentTime = `${currentHour.toString().padStart(2, '0')}:${currentMinute.toString().padStart(2, '0')}`;
+            
+            // Рабочие часы: 10:00 - 22:00 по МСК
+            const openHour = 10;
+            const closeHour = 22;
+            
+            // Проверяем, находимся ли мы в рабочее время
+            const isOpen = currentHour >= openHour && currentHour < closeHour;
+            
+            if (isOpen) {
+                statusElement.textContent = "ОТКРЫТО";
+                statusElement.className = "hours-status status-open";
+                
+                // Вычисляем время до закрытия
+                const hoursUntilClose = closeHour - currentHour - 1;
+                const minutesUntilClose = 60 - currentMinute;
+                
+                if (hoursUntilClose > 0) {
+                    timeDetails.textContent = `Сейчас ${currentTime} МСК • До закрытия ${hoursUntilClose}ч ${minutesUntilClose}м`;
+                } else {
+                    timeDetails.textContent = `Сейчас ${currentTime} МСК • До закрытия ${minutesUntilClose} минут`;
+                }
+            } else {
+                statusElement.textContent = "ЗАКРЫТО";
+                statusElement.className = "hours-status status-closed";
+                
+                // Вычисляем время до открытия
+                let hoursUntilOpen, minutesUntilOpen;
+                
+                if (currentHour < openHour) {
+                    // Еще не открывалось сегодня
+                    hoursUntilOpen = openHour - currentHour - 1;
+                    minutesUntilOpen = 60 - currentMinute;
+                } else {
+                    // Уже закрыто, откроется завтра
+                    hoursUntilOpen = (24 - currentHour) + openHour - 1;
+                    minutesUntilOpen = 60 - currentMinute;
+                }
+                
+                if (hoursUntilOpen > 0) {
+                    timeDetails.textContent = `Сейчас ${currentTime} МСК • До открытия ${hoursUntilOpen}ч ${minutesUntilOpen}м`;
+                } else {
+                    timeDetails.textContent = `Сейчас ${currentTime} МСК • До открытия ${minutesUntilOpen} минут`;
+                }
+            }
+        }
+        
+        // Обновляем статус каждую минуту
+        updateBusinessHours();
+        setInterval(updateBusinessHours, 60000);
+        
+        // Плавная прокрутка
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Анимация при загрузке
+        document.addEventListener('DOMContentLoaded', () => {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.6s';
+            
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+            
+            // Задержка для анимации
+            const animatedElements = document.querySelectorAll('.fade-in, .slide-up');
+            animatedElements.forEach((el, index) => {
+                const delay = el.getAttribute('style') ? 
+                    parseFloat(el.style.animationDelay || '0') : 
+                    (index * 0.1);
+                
+                el.style.animationDelay = `${delay}s`;
+            });
+        });
+        
+        // Эффекты при наведении для десктопа
+        if (window.innerWidth >= 768) {
+            document.querySelectorAll('.link-card, .contact-card').forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-8px)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+        }
+        
+        // Система обновления статуса в реальном времени
+        function updateSystemStatus() {
+            const statusPills = document.querySelectorAll('.pill');
+            const onlineStatus = document.querySelector('.pill:first-child i');
+            
+            // Имитация изменения статуса (в реальном приложении здесь был бы запрос к API)
+            const isOnline = Math.random() > 0.1; // 90% шанс быть онлайн
+            
+            if (isOnline) {
+                onlineStatus.style.color = 'var(--system-green)';
+                statusPills[0].innerHTML = '<i class="fas fa-circle" style="color: var(--system-green); margin-right: 6px;"></i> Система онлайн';
+            } else {
+                onlineStatus.style.color = 'var(--system-red)';
+                statusPills[0].innerHTML = '<i class="fas fa-circle" style="color: var(--system-red); margin-right: 6px;"></i> Технические работы';
+            }
+        }
+        
+        // Обновляем статус каждые 30 секунд
+        updateSystemStatus();
+        setInterval(updateSystemStatus, 30000);
+    </script>
+</body>
+</html>
